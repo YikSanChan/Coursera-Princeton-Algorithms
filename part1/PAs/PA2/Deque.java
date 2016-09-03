@@ -51,7 +51,6 @@ public class Deque<Item> implements Iterable<Item> {
 
     private void resize(int newCapacity){
         if (newCapacity < INIT_CAPACITY) return;
-        //System.out.println("RESIZE: CURRENT CAPACITY = " + capacity);
         Item[] tmp = (Item[]) new Object[newCapacity];
         first = getNext(first);
         int newLast = 1; // new first set to 0
@@ -143,13 +142,26 @@ public class Deque<Item> implements Iterable<Item> {
 
     public static void main(String[] args){
         Deque<Integer> dq = new Deque<>();
-        for (int i = 1; i < 12; i++){
+        for (int i = 1; i < 7; i++){
             dq.addLast(i);
             dq.print();
         }
-        for (int i = 0; i < 11; i++){
+        for (int i = 1; i < 7; i++){
             dq.removeFirst();
             dq.print();
         }
+        /*
+        1
+        1 2
+        1 2 3
+        1 2 3 4
+        1 2 3 4 5
+        1 2 3 4 5 6
+        2 3 4 5 6
+        3 4 5 6
+        4 5 6
+        5 6
+        6
+         */
     }
 }
