@@ -7,6 +7,15 @@ import edu.princeton.cs.algs4.StdIn;
  */
 public class Subset {
     public static void main(String[] args){
-        int k = StdIn
+
+        RandomizedQueue<String> rq = new RandomizedQueue<>();
+        while (!StdIn.isEmpty()){
+            String tmp = StdIn.readString();
+            rq.enqueue(tmp);
+        }
+        int k = Integer.parseInt(args[0]);
+        while (k-- > 0){
+            System.out.println(rq.dequeue());
+        }
     }
 }

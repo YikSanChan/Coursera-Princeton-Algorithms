@@ -8,9 +8,9 @@ import java.util.NoSuchElementException;
  */
 public class Deque<Item> implements Iterable<Item> {
 
-    static final int INIT_CAPACITY = 2;
-    static final int EXPAND_FACTOR = 2;
-    static final double SHRINK_FACTOR = 0.25;
+    private static final int INIT_CAPACITY = 2;
+    private static final int EXPAND_FACTOR = 2;
+    private static final double SHRINK_FACTOR = 0.25;
 
     private int first, last; // keep track of first and last position to add in (not for remove)
     private Item[] items; // restore elements of deque
@@ -65,7 +65,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public void addFirst(Item item){
-        if (item == null) throw new NoSuchElementException();
+        if (item == null) throw new NullPointerException();
         if (isFull()) resize(capacity * EXPAND_FACTOR);
         items[first] = item;
         first = getPrev(first);
@@ -73,7 +73,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public void addLast(Item item){
-        if (item == null) throw new NoSuchElementException();
+        if (item == null) throw new NullPointerException();
         if (isFull()) resize(capacity * EXPAND_FACTOR);
         items[last] = item;
         last = getNext(last);
@@ -81,7 +81,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Item removeFirst(){
-        if (isEmpty()) throw new UnsupportedOperationException();
+        if (isEmpty()) throw new NoSuchElementException();
         first = getNext(first);
         Item toRemove = items[first];
         items[first] = null;
@@ -91,7 +91,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Item removeLast(){
-        if (isEmpty()) throw new UnsupportedOperationException();
+        if (isEmpty()) throw new NoSuchElementException();
         last = getPrev(last);
         Item toRemove = items[last];
         items[last] = null;
@@ -109,7 +109,8 @@ public class Deque<Item> implements Iterable<Item> {
         private int current;
         private int cnt; // counter
         public DequeIterator(){
-            current = getNext(first);
+            if (!isEmpty())
+                current = getNext(first);
         }
         public boolean hasNext(){
             return cnt < size;
@@ -126,29 +127,26 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
+    /*
     public void print(){
-        /* // Do not output as expected
-        for (Item i : items){
-            System.out.print(i + " ");
-        }
-        */
+
         Iterator<Item> iter = iterator();
         while (iter.hasNext()){
             System.out.print(iter.next() + " ");
         }
         System.out.println();
-
     }
+    */
 
     public static void main(String[] args){
         Deque<Integer> dq = new Deque<>();
         for (int i = 1; i < 7; i++){
             dq.addLast(i);
-            dq.print();
+            //dq.print();
         }
         for (int i = 1; i < 7; i++){
             dq.removeFirst();
-            dq.print();
+            //dq.print();
         }
         /*
         1

@@ -13,9 +13,9 @@ import java.util.NoSuchElementException;
  */
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    static final int INIT_CAPACITY = 2;
-    static final int EXPAND_FACTOR = 2;
-    static final double SHRINK_FACTOR = 0.25;
+    private static final int INIT_CAPACITY = 2;
+    private static final int EXPAND_FACTOR = 2;
+    private static final double SHRINK_FACTOR = 0.25;
 
     private int last; // keep track of last position to add in (not for remove)
     private Item[] items; // restore elements of queue
@@ -86,8 +86,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private int cnt; // counter
 
         public RandomizedQueueIterator(){
-            compactCopy = Arrays.copyOfRange(items, 0, size);
-            StdRandom.shuffle(compactCopy);
+            if (!isEmpty()){
+                compactCopy = Arrays.copyOfRange(items, 0, size);
+                StdRandom.shuffle(compactCopy);
+            }
         }
 
         public boolean hasNext(){
@@ -104,30 +106,26 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
 
+    /*
     public void print(){
-        /* // Do not output as expected
-        for (Item i : items){
-            System.out.print(i + " ");
-        }
-        */
 
         Iterator<Item> iter = iterator();
         while (iter.hasNext()){
             System.out.print(iter.next() + " ");
         }
         System.out.println();
-
     }
+    */
 
     public static void main(String[] args){
         RandomizedQueue<Integer> rq = new RandomizedQueue<>();
         for (int i = 0; i < 6; i++){
             rq.enqueue(i);
-            rq.print();
+            //rq.print();
         }
         for (int i = 0; i < 6; i++){
             rq.dequeue();
-            rq.print();
+            //rq.print();
         }
         /*
         0
