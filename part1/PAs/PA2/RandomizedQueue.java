@@ -106,7 +106,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
 
-    /*
+
     public void print(){
 
         Iterator<Item> iter = iterator();
@@ -115,17 +115,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
         System.out.println();
     }
-    */
+
 
     public static void main(String[] args){
         RandomizedQueue<Integer> rq = new RandomizedQueue<>();
         for (int i = 0; i < 6; i++){
             rq.enqueue(i);
-            //rq.print();
+            rq.print();
         }
         for (int i = 0; i < 6; i++){
             rq.dequeue();
-            //rq.print();
+            rq.print();
         }
         /*
         0
