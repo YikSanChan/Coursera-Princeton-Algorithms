@@ -63,6 +63,11 @@ public class FastCollinearPoints {
         // 其后发现的subLineSegment才是真正的sub，且终点和最早找到的一样
         // 因为sort使得最早找到的“最低”
         Arrays.sort(points);
+        // 查重
+        for (int i = 0; i < N - 1; i++){
+            if (points[i].compareTo(points[i + 1]) == 0)
+                throw new IllegalArgumentException("contains repeated Point.");
+        }
         for (int i = 0; i < N; i++) { // iterate through Point p
             Point p = points[i];
             Point[] qArray = new Point[N - 1];
@@ -82,7 +87,6 @@ public class FastCollinearPoints {
                         System.arraycopy(qArray, begin, collinearPoints, 1, count - 1);
                         Arrays.sort(collinearPoints);
                         innerCollinear.add(new innerLineSegment(collinearPoints[0], collinearPoints[collinearPoints.length - 1], slope, count));
-//                        collinear.add(new LineSegment(collinearPoints[0], collinearPoints[collinearPoints.length - 1]));
                     }
                     // renew
                     begin = j;
@@ -97,7 +101,6 @@ public class FastCollinearPoints {
                         System.arraycopy(qArray, begin, collinearPoints, 1, count - 1);
                         Arrays.sort(collinearPoints);
                         innerCollinear.add(new innerLineSegment(collinearPoints[0], collinearPoints[collinearPoints.length - 1], slope, count));
-//                        collinear.add(new LineSegment(collinearPoints[0], collinearPoints[collinearPoints.length - 1]));
                     }
                 }
             }
@@ -107,16 +110,10 @@ public class FastCollinearPoints {
         return collinear.size();
     }
     public LineSegment[] segments() {// the line segments
-//        LineSegment[] ls = new LineSegment[collinear.size()];
-//        ls = collinear.toArray(ls);
-//        return ls;
         if (innerCollinear.size() == 0) return new LineSegment[0];
         innerLineSegment[] innerLS = new innerLineSegment[innerCollinear.size()];
         innerLS = innerCollinear.toArray(innerLS);
         Arrays.sort(innerLS);
-//        for (innerLineSegment ils: innerLS)
-//            System.out.println(ils);
-//        System.out.println("***********************************");
         collinear.add(innerLS[0].toLineSegment());
         int left = 0, right = 1;
         while (right < innerLS.length){
@@ -128,13 +125,9 @@ public class FastCollinearPoints {
                 right++;
             }
         }
-//        for (innerLineSegment ils: innerCollinear)
-//            System.out.println(ils);
-//        System.out.println("***********************************");
         LineSegment[] ls = new LineSegment[collinear.size()];
         ls = collinear.toArray(ls);
-        return ls;
-
+        return Arrays.copyOf(ls, numberOfSegments());
+        //return ls;
     }
-
 }

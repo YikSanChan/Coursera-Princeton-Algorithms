@@ -11,7 +11,7 @@ public class TestFastCollinearPoints {
     public static void main(String[] args) {
 
         String directory = "C:\\Users\\CYS\\Desktop\\Princeton-Algorithms\\part1\\PAs\\testing\\collinear\\";
-        String filename = directory + "input8.txt";
+        String filename = directory + "equidistant.txt";
         System.out.println(filename);
         // read the n points from a file
         In in = new In(filename);
