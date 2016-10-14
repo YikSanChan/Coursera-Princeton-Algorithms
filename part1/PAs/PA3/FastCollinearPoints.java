@@ -82,6 +82,7 @@ public class FastCollinearPoints {
             for (int j = 1; j < qArray.length; j++){
                 if (p.slopeTo(qArray[j]) != slope){
                     if (count >= 4){
+                        // 把这些共线的点存下来
                         Point[] collinearPoints = new Point[count];
                         collinearPoints[0] = p;
                         System.arraycopy(qArray, begin, collinearPoints, 1, count - 1);
@@ -96,6 +97,7 @@ public class FastCollinearPoints {
                 else { // p.slopeTo(qArray[j]) == slope
                     count++;
                     if (j == qArray.length - 1 && count >= 4){
+                        // 把这些共线的点存下来
                         Point[] collinearPoints = new Point[count];
                         collinearPoints[0] = p;
                         System.arraycopy(qArray, begin, collinearPoints, 1, count - 1);
@@ -113,6 +115,7 @@ public class FastCollinearPoints {
         if (innerCollinear.size() == 0) return new LineSegment[0];
         innerLineSegment[] innerLS = new innerLineSegment[innerCollinear.size()];
         innerLS = innerCollinear.toArray(innerLS);
+        // 排序，使得共线情况下，长度更长的线排在首位
         Arrays.sort(innerLS);
         collinear.add(innerLS[0].toLineSegment());
         int left = 0, right = 1;
@@ -125,9 +128,10 @@ public class FastCollinearPoints {
                 right++;
             }
         }
+        // 从内部类转化为指定类
         LineSegment[] ls = new LineSegment[collinear.size()];
         ls = collinear.toArray(ls);
+        // 没能消去immutable object error
         return Arrays.copyOf(ls, numberOfSegments());
-        //return ls;
     }
 }
