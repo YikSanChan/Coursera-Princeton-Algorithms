@@ -15,6 +15,12 @@ public class Solver {
     private boolean isSolvable;
     private SearchNode solution;
 
+    /**
+     * Why SearchNode?
+     * Information including previous and moves can be part of Board class.
+     * But Auto grader specify public interfaces I can use.
+     * So I can only use SearchNode to carry these information.
+     */
     private class SearchNode {
 
         private Board board;
