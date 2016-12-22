@@ -67,13 +67,14 @@ public class KdTree {
         int cmp = (orientation ? Point2D.X_ORDER : Point2D.Y_ORDER).compare(p, x.p);
         if (cmp < 0)
         {
-            if (orientation) x.lb = insert(x.lb, p, new RectHV(rect.xmin(), rect.ymin(), x.p.x(), rect.ymax()), !orientation);
-            else             x.lb = insert(x.lb, p, new RectHV(rect.xmin(), rect.ymin(), rect.xmax(), x.p.y()), !orientation);
+            //don't have to call RectHV methods until you reached null
+            if (orientation) x.lb = insert(x.lb, p, x.lb == null ? new RectHV(rect.xmin(), rect.ymin(), x.p.x(), rect.ymax()) : x.lb.rect, !orientation);
+            else             x.lb = insert(x.lb, p, x.lb == null ? new RectHV(rect.xmin(), rect.ymin(), rect.xmax(), x.p.y()) : x.lb.rect, !orientation);
         }
         else
         {
-            if (orientation) x.rt = insert(x.rt, p, new RectHV(x.p.x(), rect.ymin(), rect.xmax(), rect.ymax()), !orientation);
-            else             x.rt = insert(x.rt, p, new RectHV(rect.xmin(), x.p.y(), rect.xmax(), rect.ymax()), !orientation);
+            if (orientation) x.rt = insert(x.rt, p, x.rt == null ? new RectHV(x.p.x(), rect.ymin(), rect.xmax(), rect.ymax()) : x.rt.rect, !orientation);
+            else             x.rt = insert(x.rt, p, x.rt == null ? new RectHV(rect.xmin(), x.p.y(), rect.xmax(), rect.ymax()) : x.rt.rect, !orientation);
         }
         return x;
     }
