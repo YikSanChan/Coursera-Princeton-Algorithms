@@ -40,4 +40,4 @@ Search application.
 
 - [Specification](http://coursera.cs.princeton.edu/algs4/assignments/kdtree.html)
 - [Checklist](http://coursera.cs.princeton.edu/algs4/checklists/kdtree.html)
-- Score: 98/100
+- Score: 100/100
