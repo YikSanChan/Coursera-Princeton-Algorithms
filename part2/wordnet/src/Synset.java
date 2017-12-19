@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Synset {
@@ -5,6 +6,7 @@ public class Synset {
     private List<String> synonyms;
 
     public Synset(List<String> synonyms) {
+        this.synonyms = new ArrayList<>();
         this.synonyms.addAll(synonyms);
     }
 
