@@ -1,21 +1,17 @@
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DirectedCycle;
+import edu.princeton.cs.algs4.In;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class WordNet {
 
-    private Map<Integer, Synset> synsets;
-    private Map<String, List<Integer>> nouns;
-    private Digraph G;
+    private final Map<Integer, Synset> synsets;
+    private final Map<String, List<Integer>> nouns;
     private final SAP sap;
 
     // constructor takes the name of the two input files
@@ -26,18 +22,14 @@ public class WordNet {
         }
         synsets = new HashMap<>();
         nouns = new HashMap<>();
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(new File(synsetsFile));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        In in = new In(synsetsFile);
         String line;
-        while (scanner.hasNextLine()) {
-            line = scanner.nextLine();
+        while (in.hasNextLine()) {
+            line = in.readLine();
             String[] split = line.trim().split(",");
             int id = Integer.parseInt(split[0]);
-            List<String> synonyms = Arrays.stream(split[1].split("\\s+")).collect(Collectors.toList());
+            List<String> synonyms = new ArrayList<>();
+            synonyms.addAll(Arrays.asList(split[1].split("\\s+")));
             synsets.put(id, new Synset(synonyms));
             for (String word: synonyms) {
                 if (!nouns.containsKey(word)) {
@@ -46,21 +38,18 @@ public class WordNet {
                 nouns.get(word).add(id);
             }
         }
-        scanner.close();
-        G = new Digraph(synsets.size());
-        try {
-            scanner = new Scanner(new File(hypernymsFile));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        while (scanner.hasNextLine()) {
-            line = scanner.nextLine();
+        in.close();
+        Digraph G = new Digraph(synsets.size());
+        in = new In(hypernymsFile);
+        while (in.hasNextLine()) {
+            line = in.readLine();
             String[] split = line.trim().split(",");
             int from = Integer.parseInt(split[0]);
             for (int i = 1; i < split.length; i++) {
                 G.addEdge(from, Integer.parseInt(split[i]));
             }
         }
+        in.close();
         // check whether G is DAG
         if (!hasOneRoot(G) || !isDAG(G)) {
             throw new IllegalArgumentException("Not a rooted DAG.");
@@ -119,5 +108,6 @@ public class WordNet {
     }
 
     public static void main(String[] args) {
+//        WordNet wordNet = new WordNet("test/synsets.txt", "test/hypernyms.txt");
     }
 }

@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Synset {
 
-    private List<String> synonyms;
+    private final List<String> synonyms;
 
     public Synset(List<String> synonyms) {
         this.synonyms = new ArrayList<>();
