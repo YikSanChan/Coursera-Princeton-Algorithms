@@ -5,11 +5,11 @@ public class Outcast {
 
     private final WordNet wordnet;
 
-    public Outcast(WordNet wordnet) {// constructor takes a WordNet object
+    public Outcast(WordNet wordnet) { // constructor takes a WordNet object
         this.wordnet = wordnet;
     }
 
-    public String outcast(String[] nouns) {// given an array of WordNet nouns, return an outcast
+    public String outcast(String[] nouns) { // given an array of WordNet nouns, return an outcast
         if (nouns == null || nouns.length < 2) {
             throw new IllegalArgumentException("outcast() can take only String array with length >= 2.");
         }
